@@ -13,6 +13,133 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+function init() {
+    inquirer.prompt([   
+    {
+        type: "input",
+        message: "Type your full name:",
+        name: "name",
+    },
+    {
+        type:"input",
+        message: "Enter your employee ID",
+        name: "id",
+    },
+    {
+        type:"input",
+        message: "Enter your email address:",
+        name: "email",
+    }, 
+    {
+        type: "list",
+        message:"Select your role from the following:",
+        name:"role",
+        choices: ["Manager","Engineer", "Intern"]
+    },
+    // switch(x) {
+    //     case 'value1':  // if (x === 'value1')
+    //       ...
+    //       [break]
+      
+    //     case 'value2':  // if (x === 'value2')
+    //       ...
+    //       [break]
+      
+    //     default:
+    //       ...
+    //       [break]
+    //   }
+]).then(function(response){
+    switch(response.role) {
+            case "Engineer":  // if (x === 'value1')
+              eng(response);
+              break;
+          
+            case "Manager":  // if (x === 'value2')
+              mgr(response);
+              break;
+
+              case "Intern":  // if (x === 'value2')
+              int(response);  
+              break;
+          
+            default:
+              console.log("invalid role");
+              break;
+          }
+
+
+
+
+
+
+})
+
+}
+init();
+
+
+
+
+function mgr(response) {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Enter your office number:",
+            name:"officeNumber",
+        }
+
+    ]).then(function(mgrResponse){
+        var info = [{
+        name: response.name,
+         id: response.id,
+         email: response.email,
+         officeNumber: mgrResponse.officeNumber,
+
+    }]
+        
+
+        render(info);
+
+    })
+}
+function eng(response) {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Enter your github username:",
+            name:"github",
+        }
+
+    ]).then(function(engResponse){
+        var name = response.name
+        var id = response.id
+        var email = response.email
+        var github = engResponse.github
+
+        render(name, id, email, github);
+
+    })
+}
+function int(response) {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Enter your school name:",
+            name:"school",
+        }
+
+    ]).then(function(intResponse){
+        var name = response.name
+        var id = response.id
+        var email = response.email
+        var school = intResponse.school
+
+        render(name, id, email, school);
+
+    })
+}
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
